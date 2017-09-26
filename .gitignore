@@ -1,0 +1,7 @@
+Assets
+bin
+*.pfx
+obj
+Properties
+Package.appxmanifest
+*.csproj

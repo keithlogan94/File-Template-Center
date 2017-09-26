@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="File_Template_Centre.CreateTemplateSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:File_Template_Centre"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Rectangle
+            Name="FileDropBackground"
+            Fill="FloralWhite"
+            AllowDrop="True"
+            CanDrag="True"
+            DragOver="FileDropBackground_DragOver"
+            Drop="FileDropBackground_Drop"
+            />
+        <StackPanel
+            Orientation="Vertical"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            >
+            <TextBlock
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="106"
+                HorizontalAlignment="Center"
+                Opacity=".1"
+                AllowDrop="True"
+                CanDrag="True"
+                DragOver="FileDropBackground_DragOver"
+                Drop="FileDropBackground_Drop"
+                >
+                &#59331;
+            </TextBlock>
+            <TextBlock
+                Margin="0,20,0,0"
+                AllowDrop="True"
+                CanDrag="True"
+                DragOver="FileDropBackground_DragOver"
+                Drop="FileDropBackground_Drop"
+                >
+                Drag a file here to create a template
+            </TextBlock>
+            <TextBlock
+                Margin="0,20,0,0"
+                HorizontalAlignment="Center"
+                AllowDrop="True"
+                CanDrag="True"
+                DragOver="FileDropBackground_DragOver"
+                Drop="FileDropBackground_Drop"
+                >
+                Or
+            </TextBlock>
+            <Button 
+                Name="selectFile"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Center"
+                Click="selectFile_Click"
+                >
+                Select File
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
