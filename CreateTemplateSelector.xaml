@@ -61,5 +61,54 @@
                 Select File
             </Button>
         </StackPanel>
+        <Popup>
+            <StackPanel
+                Width="Auto"
+                Margin="10,0,0,0"
+                >
+                <StackPanel
+                    Orientation="Vertical"
+                    >
+                    <TextBlock
+                        Text="Template Name: "
+                        Margin="0,0,20,0"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        />
+                    <TextBox
+                        Width="200"
+                        Height="20"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Orientation="Vertical"
+                    >
+                    <TextBlock
+                        Text="Description: "
+                        FontSize="12"
+                        FontWeight="Bold"
+                        />
+                    <TextBox
+                        Width="200"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="40,0,0,0"
+                    >
+                    <Button
+                        FontSize="20"
+                        >
+                        Create
+                    </Button>
+                    <Button
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="14"
+                        >
+                        &#59153;
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Popup>
     </Grid>
 </Page>

@@ -44,6 +44,8 @@ namespace File_Template_Centre
                 String fileName = file.DisplayName;
                 StorageFile dataFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName);
                 await FileIO.WriteTextAsync(dataFile, await FileIO.ReadTextAsync(file));
+                FileTemplate template = new FileTemplate(file);
+                Frame.Navigate(typeof(TemplateSettings), template);
             }
         }
 
@@ -55,6 +57,7 @@ namespace File_Template_Centre
             picker.ViewMode = PickerViewMode.List;
             picker.FileTypeFilter.Add("*");
             StorageFile file = await picker.PickSingleFileAsync();
+            FileTemplate template = new FileTemplate(file);
             if (file == null)
             {
                 //throw up message that user did not select file
@@ -63,6 +66,7 @@ namespace File_Template_Centre
             else
             {
                 //Collect data and set mainWindow Frame to template information collect page.
+                Frame.Navigate(typeof(TemplateSettings), template);
             }
         }
     }

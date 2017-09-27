@@ -20,6 +20,7 @@ namespace File_Template_Centre
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
     public sealed partial class MainPage : Page
     {
         public MainPage()
@@ -35,12 +36,17 @@ namespace File_Template_Centre
             switch (selectedItem.Name.ToString())
             {
                 case "CreateTemplate":
-                    mainWindow.Navigate(typeof(CreateTemplateSelector));
+                    mainWindow.Navigate(typeof(CreateTemplateSelector), mainWindow);
                     break;
                 case "SearchTemplates":
                     mainWindow.Navigate(typeof(SearchTemplates));
                     break;
             }
+        }
+
+        private void changeToTemplateSettings()
+        {
+            mainWindow.Navigate(typeof(TemplateSettings));
         }
     }
 }

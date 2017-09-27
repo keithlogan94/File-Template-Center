@@ -57,6 +57,11 @@ namespace File_Template_Centre
             allSet[3] = true;
         }
 
+        private String getFileName()
+        {
+            return data.DisplayName + data.FileType;
+        }
+
         //Save data to file and info to manifest
         public async void saveTemplate()
         {
@@ -65,9 +70,7 @@ namespace File_Template_Centre
                 throw new System.NullReferenceException(
                     "All variables must be set to a value first before saving."
                     );
-            /* get filename 
-             - displayName is assumed to be filename */
-            String templateName = data.DisplayName;
+            String templateName = getFileName();
             //get manifest file to append additional template info to
             StorageFile templateManifest = 
                 await ApplicationData.Current.LocalCacheFolder.GetFileAsync(MANIFEST_FILE);
@@ -98,14 +101,21 @@ namespace File_Template_Centre
         //create manifest file is not already created
         private async void setupManifest()
         {
-            StorageFile manifest = 
+            try
+            {
+                StorageFile manifest =
                 await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(
-                    MANIFEST_FILE, 
+                    MANIFEST_FILE,
                     CreationCollisionOption.FailIfExists
                     );
-            if (manifest != null)
+                if (manifest != null)
+                {
+                    await FileIO.WriteTextAsync(manifest, "");
+                }
+            }
+            catch(Exception e)
             {
-                await FileIO.WriteTextAsync(manifest, "");
+                //nothing
             }
         }
     }
