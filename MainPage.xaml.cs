@@ -43,10 +43,5 @@ namespace File_Template_Centre
                     break;
             }
         }
-
-        private void changeToTemplateSettings()
-        {
-            mainWindow.Navigate(typeof(TemplateSettings));
-        }
     }
 }

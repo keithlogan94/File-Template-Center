@@ -24,6 +24,8 @@ namespace File_Template_Centre
     /// </summary>
     public sealed partial class CreateTemplateSelector : Page
     {
+        private FileTemplate template = null;
+
         public CreateTemplateSelector()
         {
             this.InitializeComponent();
@@ -36,16 +38,18 @@ namespace File_Template_Centre
 
         async private void FileDropBackground_Drop(object sender, DragEventArgs e)
         {
-            //Collect data and set mainWindow Frame to template information collect page.
+            //Collect data and open popup to get template settings
             var files = await e.DataView.GetStorageItemsAsync();
             if (files.Count > 0)
             {
                 StorageFile file = files[0] as StorageFile;
-                String fileName = file.DisplayName;
+                String fileName = file.DisplayName + file.DisplayType;
+                /* make sure you are not using a folder that is saved to the drive automatically.
+                 Too much information to save */
                 StorageFile dataFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName);
                 await FileIO.WriteTextAsync(dataFile, await FileIO.ReadTextAsync(file));
-                FileTemplate template = new FileTemplate(file);
-                Frame.Navigate(typeof(TemplateSettings), template);
+                template = new FileTemplate(fileName);
+                templateSettings.IsOpen = true;
             }
         }
 
@@ -57,7 +61,8 @@ namespace File_Template_Centre
             picker.ViewMode = PickerViewMode.List;
             picker.FileTypeFilter.Add("*");
             StorageFile file = await picker.PickSingleFileAsync();
-            FileTemplate template = new FileTemplate(file);
+            String fileName = file.DisplayName + file.FileType;
+            template = new FileTemplate(fileName);
             if (file == null)
             {
                 //throw up message that user did not select file
@@ -66,7 +71,7 @@ namespace File_Template_Centre
             else
             {
                 //Collect data and set mainWindow Frame to template information collect page.
-                Frame.Navigate(typeof(TemplateSettings), template);
+                templateSettings.IsOpen = true;
             }
         }
     }

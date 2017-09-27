@@ -10,18 +10,19 @@ namespace File_Template_Centre
 {
     class FileTemplate
     {
-        private StorageFile data = null;
+        private String localFileName = null;
         private String templateName = null;
+        private String templateDescription = null;
         private String dateCreated = null;
-        private String notes = null;
         private bool[] allSet = { false, false, false, false };
         private const String MANIFEST_FILE = "templatemanifest.dat";
+        private enum SetType { LOCAL_FILENAME, TEMPLATE_NAME, DATE_CREATED, TEMPLATE_DESCRIPTION };
 
-        public FileTemplate(StorageFile file)
+        public FileTemplate(String localFileName)
         {
-            data = file;
-            allSet[0] = true;
+            this.localFileName = localFileName;
             setupManifest();
+            allSet[(int)SetType.LOCAL_FILENAME] = true;
         }
 
         public String getTemplateName()
@@ -32,7 +33,7 @@ namespace File_Template_Centre
         public void setTemplateName(String templateName)
         {
             this.templateName = templateName;
-            allSet[1] = true;
+            allSet[(int)SetType.TEMPLATE_NAME] = true;
         }
 
         public String getDateCreated()
@@ -43,26 +44,30 @@ namespace File_Template_Centre
         public void setDateCreated(String dateCreated)
         {
             this.dateCreated = dateCreated;
-            allSet[2] = true;
+            allSet[(int)SetType.DATE_CREATED] = true;
         }
 
-        public String getNotes()
+        public String getDescription()
         {
-            return notes;
+            return templateDescription;
         }
 
-        public void setNotes(String notes)
+        public void setDescription(String notes)
         {
-            this.notes = notes;
-            allSet[3] = true;
+            this.templateDescription = notes;
+            allSet[(int)SetType.TEMPLATE_DESCRIPTION] = true;
         }
 
-        private String getFileName()
+        public String getLocalFileName()
         {
-            return data.DisplayName + data.FileType;
+            return this.localFileName;
         }
 
-        //Save data to file and info to manifest
+
+        /// <summary>
+        /// file data to template should already be saved. saveTemplate() should only 
+        /// modify the manifest file to recognize the file saved.
+        /// </summary>
         public async void saveTemplate()
         {
             //check if all data members were set before trying to save template
@@ -70,7 +75,7 @@ namespace File_Template_Centre
                 throw new System.NullReferenceException(
                     "All variables must be set to a value first before saving."
                     );
-            String templateName = getFileName();
+            String templateLocalFileName = getLocalFileName();
             //get manifest file to append additional template info to
             StorageFile templateManifest = 
                 await ApplicationData.Current.LocalCacheFolder.GetFileAsync(MANIFEST_FILE);
@@ -78,16 +83,20 @@ namespace File_Template_Centre
                 throw new System.NullReferenceException(
                     "templateManifest was set to null. manifest file has not been created."
                     );
-            String line = templateName + "," + dateCreated + "," + notes + "\n";
+            String line = templateLocalFileName + "," + dateCreated + "," + templateDescription + "\n";
             await FileIO.AppendLinesAsync(templateManifest, new List<String> { line });
             //create file to save actual template file data
-            StorageFile localFile = 
-                await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(templateName,
-                CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(data));
+            //StorageFile localFile = 
+            //    await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(templateName,
+            //    CreationCollisionOption.ReplaceExisting);
+            //await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(data));
         }
 
-        //check if all data members are set
+
+        /// <summary>
+        /// check if all data members are set
+        /// </summary>
+        /// <returns></returns>
         private bool isAllset()
         {
             foreach (bool b in allSet)
@@ -98,7 +107,10 @@ namespace File_Template_Centre
             return true;
         }
 
-        //create manifest file is not already created
+
+        /// <summary>
+        /// create manifest file if not already created
+        /// </summary>
         private async void setupManifest()
         {
             try
