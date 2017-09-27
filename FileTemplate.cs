@@ -57,44 +57,34 @@ namespace File_Template_Centre
             allSet[3] = true;
         }
 
+        //Save data to file and info to manifest
         public async void saveTemplate()
         {
-            /*
-             JSON FORMAT
-             {
-                [
-                    { "templateName" : "template name" , "dateCreated" : "17 September 2017, Monday 15:46" , "notes" : "notes that user set" , "fileData" : "file-with-data.dat" },
-                    {"templateName":"template name","dateCreated":"17 September 2017, Monday 15:46", "notes":"notes that user set","fileData":"file-with-data.dat"},
-                    {"templateName":"template name","dateCreated":"17 September 2017, Monday 15:46", "notes":"notes that user set","fileData":"file-with-data.dat"},
-                    {"templateName":"template name","dateCreated":"17 September 2017, Monday 15:46", "notes":"notes that user set","fileData":"file-with-data.dat"},
-                    {"templateName":"template name","dateCreated":"17 September 2017, Monday 15:46", "notes":"notes that user set","fileData":"file-with-data.dat"}
-                ]
-            }
-             */
+            //check if all data members were set before trying to save template
+            if (!isAllset())
+                throw new System.NullReferenceException(
+                    "All variables must be set to a value first before saving."
+                    );
+            /* get filename 
+             - displayName is assumed to be filename */
+            String templateName = data.DisplayName;
+            //get manifest file to append additional template info to
             StorageFile templateManifest = 
                 await ApplicationData.Current.LocalCacheFolder.GetFileAsync(MANIFEST_FILE);
             if (templateManifest == null)
                 throw new System.NullReferenceException(
                     "templateManifest was set to null. manifest file has not been created."
                     );
-            String templateManifestContents = await FileIO.ReadTextAsync(templateManifest);
-            JsonValue json = JsonValue.Parse(templateManifestContents);
-            JsonArray templateFiles = new JsonArray();
-            foreach (var obj in json.GetArray())
-                templateFiles.Add(obj);
-            JsonObject manifestData = new JsonObject();
-            //manifestData.Set
-            if (!isAllset())
-                throw new System.NullReferenceException(
-                    "All variables must be set to a value first before saving."
-                    );
-            String templateName = data.DisplayName;
+            String line = templateName + " " + dateCreated + " " + notes + "\n";
+            await FileIO.AppendLinesAsync(templateManifest, new List<String> { line });
+            //create file to save actual template file data
             StorageFile localFile = 
                 await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(templateName,
                 CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(data));
         }
 
+        //check if all data members are set
         private bool isAllset()
         {
             foreach (bool b in allSet)
@@ -105,6 +95,7 @@ namespace File_Template_Centre
             return true;
         }
 
+        //create manifest file is not already created
         private async void setupManifest()
         {
             StorageFile manifest = 
@@ -114,7 +105,7 @@ namespace File_Template_Centre
                     );
             if (manifest != null)
             {
-                await FileIO.WriteTextAsync(manifest, "{[]}");
+                await FileIO.WriteTextAsync(manifest, "");
             }
         }
     }
