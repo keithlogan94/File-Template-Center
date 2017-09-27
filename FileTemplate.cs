@@ -75,7 +75,7 @@ namespace File_Template_Centre
                 throw new System.NullReferenceException(
                     "templateManifest was set to null. manifest file has not been created."
                     );
-            String line = templateName + " " + dateCreated + " " + notes + "\n";
+            String line = templateName + "," + dateCreated + "," + notes + "\n";
             await FileIO.AppendLinesAsync(templateManifest, new List<String> { line });
             //create file to save actual template file data
             StorageFile localFile = 
