@@ -10,24 +10,32 @@ namespace File_Template_Centre
 {
     class FileTemplate
     {
+        private StorageFile fileData = null;
         private String localFileName = null;
         private String templateName = null;
         private String templateDescription = null;
         private String dateCreated = null;
-        private bool[] allSet = { false, false, false, false };
+        private bool[] allSet = { false, false, false, false, false };
         private const String MANIFEST_FILE = "templatemanifest.dat";
-        private enum SetType { LOCAL_FILENAME, TEMPLATE_NAME, DATE_CREATED, TEMPLATE_DESCRIPTION };
+        private enum SetType { LOCAL_FILEDATA, LOCAL_FILENAME, TEMPLATE_NAME, DATE_CREATED, TEMPLATE_DESCRIPTION };
 
-        public FileTemplate(String localFileName)
+        public FileTemplate(StorageFile fileData)
         {
-            this.localFileName = localFileName;
+            this.fileData = fileData ?? throw new Exception(message: "error: fileData must not be null.");
+            this.localFileName = fileData.DisplayName + fileData.FileType;
             setupManifest();
+            allSet[(int)SetType.LOCAL_FILEDATA] = true;
             allSet[(int)SetType.LOCAL_FILENAME] = true;
         }
 
         public String getTemplateName()
         {
             return templateName;
+        }
+
+        public String getLocalFileName()
+        {
+            return this.localFileName;
         }
 
         public void setTemplateName(String templateName)
@@ -58,12 +66,6 @@ namespace File_Template_Centre
             allSet[(int)SetType.TEMPLATE_DESCRIPTION] = true;
         }
 
-        public String getLocalFileName()
-        {
-            return this.localFileName;
-        }
-
-
         /// <summary>
         /// file data to template should already be saved. saveTemplate() should only 
         /// modify the manifest file to recognize the file saved.
@@ -75,7 +77,6 @@ namespace File_Template_Centre
                 throw new System.NullReferenceException(
                     "All variables must be set to a value first before saving."
                     );
-            String templateLocalFileName = getLocalFileName();
             //get manifest file to append additional template info to
             StorageFile templateManifest = 
                 await ApplicationData.Current.LocalCacheFolder.GetFileAsync(MANIFEST_FILE);
@@ -83,13 +84,13 @@ namespace File_Template_Centre
                 throw new System.NullReferenceException(
                     "templateManifest was set to null. manifest file has not been created."
                     );
-            String line = templateLocalFileName + "," + dateCreated + "," + templateDescription + "\n";
+            String line = this.localFileName + "," + dateCreated + "," + templateDescription + "\n";
             await FileIO.AppendLinesAsync(templateManifest, new List<String> { line });
-            //create file to save actual template file data
-            //StorageFile localFile = 
-            //    await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(templateName,
-            //    CreationCollisionOption.ReplaceExisting);
-            //await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(data));
+            //create file to save actual template file data and save
+            StorageFile localFile =
+                await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(this.localFileName,
+                CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(this.fileData));
         }
 
 

@@ -43,12 +43,8 @@ namespace File_Template_Centre
             if (files.Count > 0)
             {
                 StorageFile file = files[0] as StorageFile;
-                String fileName = file.DisplayName + file.DisplayType;
-                /* make sure you are not using a folder that is saved to the drive automatically.
-                 Too much information to save */
-                StorageFile dataFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName);
-                await FileIO.WriteTextAsync(dataFile, await FileIO.ReadTextAsync(file));
-                template = new FileTemplate(fileName);
+                if (file == null) return;
+                template = new FileTemplate(file);
                 templateSettings.IsOpen = true;
             }
         }
@@ -61,8 +57,8 @@ namespace File_Template_Centre
             picker.ViewMode = PickerViewMode.List;
             picker.FileTypeFilter.Add("*");
             StorageFile file = await picker.PickSingleFileAsync();
-            String fileName = file.DisplayName + file.FileType;
-            template = new FileTemplate(fileName);
+            if (file == null) return;
+            template = new FileTemplate(file);
             if (file == null)
             {
                 //throw up message that user did not select file
@@ -82,37 +78,39 @@ namespace File_Template_Centre
 
         private void templateSettings_Closed(object sender, object e)
         {
-            selectFile.IsEnabled = false;
+            selectFile.IsEnabled = true;
         }
 
         private void cancelTemplate_Click(object sender, RoutedEventArgs e)
         {
-            cancelTemplate();
+            cancelTemplateFromSettings();
         }
 
-        async private void cancelTemplate()
+        async private void cancelTemplateFromSettings()
         {
             //handle all work in thread to avoid slowing the user experience
             await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 //Handle canceling the template
                 //...
+                template = null;
                 templateSettings.IsOpen = false;
             });
         }
 
-        async private void saveTemplate()
+        async private void saveTemplateFromSettings()
         {
             //handle all work in thread to avoid slowing the user experience
             await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 //Handle Saving the template
                 //...
+                template.saveTemplate();
                 templateSettings.IsOpen = false;
             });
         }
 
         private void saveTemplateButton_Click(object sender, RoutedEventArgs e)
         {
-            saveTemplate();
+            saveTemplateFromSettings();
         }
     }
 }
