@@ -74,6 +74,8 @@ namespace File_Template_Centre
         private void templateSettings_Opened(object sender, object e)
         {
             selectFile.IsEnabled = false;
+            //update template settings info
+            localFileName.Text = template.getLocalFileName();
         }
 
         private void templateSettings_Closed(object sender, object e)

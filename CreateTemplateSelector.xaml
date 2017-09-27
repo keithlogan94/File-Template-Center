@@ -210,13 +210,20 @@
                 </StackPanel>
                 <StackPanel
                     Orientation="Horizontal"
+                    Margin="40,0,0,0"
                     >
                     <TextBlock
                         FontSize="12"
                         Foreground="White"
                         FontFamily="Segoe MDL2 Assets"
                         >
-                        
+                        &#59171;
+                    </TextBlock>
+                    <TextBlock
+                        Name="localFileName"
+                        FontSize="12"
+                        Foreground="White"
+                        >
                     </TextBlock>
                 </StackPanel>
                 <StackPanel
