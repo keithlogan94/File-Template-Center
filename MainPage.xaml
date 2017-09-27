@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <SplitView
             IsPaneOpen="True"
-            OpenPaneLength="250"
+            OpenPaneLength="400"
             DisplayMode="Inline"
             >
             <SplitView.Pane>
@@ -24,7 +24,7 @@
                     Background="#060d13"
                     >
                     <ListBoxItem
-                    Name="CreateTemplate"
+                        Name="CreateTemplate"
                         >
                         <StackPanel
                             Orientation="Horizontal"

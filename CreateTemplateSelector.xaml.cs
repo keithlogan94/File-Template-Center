@@ -74,5 +74,45 @@ namespace File_Template_Centre
                 templateSettings.IsOpen = true;
             }
         }
+
+        private void templateSettings_Opened(object sender, object e)
+        {
+            selectFile.IsEnabled = false;
+        }
+
+        private void templateSettings_Closed(object sender, object e)
+        {
+            selectFile.IsEnabled = false;
+        }
+
+        private void cancelTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            cancelTemplate();
+        }
+
+        async private void cancelTemplate()
+        {
+            //handle all work in thread to avoid slowing the user experience
+            await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                //Handle canceling the template
+                //...
+                templateSettings.IsOpen = false;
+            });
+        }
+
+        async private void saveTemplate()
+        {
+            //handle all work in thread to avoid slowing the user experience
+            await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                //Handle Saving the template
+                //...
+                templateSettings.IsOpen = false;
+            });
+        }
+
+        private void saveTemplateButton_Click(object sender, RoutedEventArgs e)
+        {
+            saveTemplate();
+        }
     }
 }

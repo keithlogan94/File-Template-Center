@@ -35,10 +35,9 @@
                                     </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
-
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
                                                      Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#060d13" />
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#060d15" />
                                             </ObjectAnimationUsingKeyFrames>
 
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
@@ -160,13 +159,17 @@
         </StackPanel>
         <Popup
             Name="templateSettings"
+            Opened="templateSettings_Opened"
+            Closed="templateSettings_Closed"
             >
             <StackPanel
                 Width="400"
                 Background="#060d13"
                 >
                 <Button
+                    Name="cancelTemplate"
                     FontFamily="Segoe MDL2 Assets"
+                    Click="cancelTemplate_Click"
                     FontSize="14"
                     Foreground="White"
                     HorizontalAlignment="Right"
@@ -210,6 +213,7 @@
                     Margin="100,0,0,0"
                     >
                     <Button
+                        Name="saveTemplateButton"
                         FontSize="20"
                         Foreground="White"
                         Style="{StaticResource CustomButtonStyle}"
