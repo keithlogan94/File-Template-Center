@@ -21,6 +21,7 @@
                 <ListBox
                     Name="mainNavigation"
                     SelectionChanged="mainNavigation_SelectionChanged"
+                    Background="#060d13"
                     >
                     <ListBoxItem
                     Name="CreateTemplate"
@@ -31,12 +32,14 @@
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 FontSize="26"
+                                Foreground="White"
                                 >
                                 &#59331;
                             </TextBlock>
                             <TextBlock
                                 FontSize="18"
                                 Margin="20,0,0,0"
+                                Foreground="White"
                                 >
                                 Create Template
                             </TextBlock>
@@ -51,12 +54,14 @@
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 FontSize="26"
+                                Foreground="White"
                                 >
                                 &#59166;
                             </TextBlock>
                             <TextBlock
                                 FontSize="18"
                                 Margin="20,0,0,0"
+                                Foreground="White"
                                 >
                                 Search Templates
                             </TextBlock>
