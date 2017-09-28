@@ -106,7 +106,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Rectangle
             Name="FileDropBackground"
-            Fill="FloralWhite"
+            Fill="White"
             AllowDrop="True"
             CanDrag="True"
             DragOver="FileDropBackground_DragOver"
@@ -171,7 +171,7 @@
             </Popup.ChildTransitions>
             <StackPanel
                 Width="400"
-                Background="#060d13"
+                Background="#f7f7f7"
                 >
                 <Button
                     Name="cancelTemplate"
@@ -180,7 +180,6 @@
                     FontSize="14"
                     Foreground="White"
                     HorizontalAlignment="Right"
-                    Style="{StaticResource CustomButtonStyle}"
                     >
                     &#59153;
                 </Button>
@@ -192,7 +191,7 @@
                         Margin="20,0,20,0"
                         FontSize="12"
                         FontWeight="Bold"
-                        Foreground="White"
+                        Foreground="Black"
                         />
                     <TextBox
                         Name="templateNameTextBox"
@@ -210,7 +209,7 @@
                         Text="Description: "
                         FontSize="12"
                         FontWeight="Bold"
-                        Foreground="White"
+                        Foreground="Black"
                         Margin="20,0,0,0"
                         />
                     <TextBox
@@ -228,7 +227,7 @@
                     >
                     <TextBlock
                         FontSize="12"
-                        Foreground="White"
+                        Foreground="Black"
                         FontFamily="Segoe MDL2 Assets"
                         VerticalAlignment="Center"
                         >
@@ -237,7 +236,7 @@
                     <TextBlock
                         Name="localFileName"
                         FontSize="12"
-                        Foreground="White"
+                        Foreground="Black"
                         VerticalAlignment="Center"
                         >
                     </TextBlock>
@@ -249,8 +248,7 @@
                     <Button
                         Name="saveTemplateButton"
                         FontSize="20"
-                        Foreground="White"
-                        Style="{StaticResource CustomButtonStyle}"
+                        Foreground="Black"
                         Click="saveTemplateButton_Click"
                         >
                         Create Template
@@ -273,7 +271,7 @@
                 </TransitionCollection>
             </Popup.ChildTransitions>
             <StackPanel
-                Background="#060d13"
+                Background="#f7f7f7"
                 Orientation="Horizontal"
                 Height="30"
                 Width="400"
@@ -284,17 +282,17 @@
                     FontFamily="Segoe MDL2 Assets"
                     Click="cancelMessage_Click"
                     FontSize="14"
-                    Foreground="White"
+                    Foreground="Black"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Style="{StaticResource CustomButtonStyle}"
+                    Margin="0,0,15,0"
                     >
                     &#59153;
                 </Button>
                 <TextBlock
                     Name="message"
                     FontSize="14"
-                    Foreground="White"
+                    Foreground="Black"
                     VerticalAlignment="Center"
                     >
                 </TextBlock>

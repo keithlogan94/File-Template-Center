@@ -103,9 +103,9 @@ namespace File_Template_Centre
             await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 //Handle canceling the template
                 //...
-                template = null;
                 templateSettings.IsOpen = false;
                 sendMessage("Template Canceled.");
+                template = null;
             });
         }
 
@@ -235,14 +235,20 @@ namespace File_Template_Centre
             // And create the toast notification
             var toast = new ToastNotification(toastContent.GetXml());
             ToastNotificationManager.CreateToastNotifier().Show(toast);
-            sendMessage("Template Saved.");
+            if (File.Exists(
+                ApplicationData.Current.LocalCacheFolder.Path + 
+                "/" + 
+                template.getLocalFileName()))
+                sendMessage("Previous Template Overwritten.");
+            else
+                sendMessage("Template Saved.");
         }
 
         private void sendMessage(String message)
         {
+            messageTimer.Start();
             this.message.Text = message;
             this.messagePopup.IsOpen = true;
-            messageTimer.Start();
         }
 
         private void cancelMessage_Click(object sender, RoutedEventArgs e)
@@ -253,7 +259,6 @@ namespace File_Template_Centre
         private void closeMessageTimer_Tick(object sender, object e)
         {
             this.messagePopup.IsOpen = false;
-            messageTimer.Stop();
         }
     }
 }

@@ -18,10 +18,12 @@
             DisplayMode="Inline"
             >
             <SplitView.Pane>
+
+                <!-- Background="#060d13" -->
                 <ListBox
                     Name="mainNavigation"
                     SelectionChanged="mainNavigation_SelectionChanged"
-                    Background="#060d13"
+                    Background="#f7f7f7"
                     >
                     <ListBoxItem
                         Name="CreateTemplate"
@@ -32,14 +34,14 @@
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 FontSize="26"
-                                Foreground="White"
+                                Foreground="Black"
                                 >
                                 &#59331;
                             </TextBlock>
                             <TextBlock
                                 FontSize="18"
                                 Margin="20,0,0,0"
-                                Foreground="White"
+                                Foreground="Black"
                                 >
                                 Create Template
                             </TextBlock>
@@ -54,14 +56,14 @@
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 FontSize="26"
-                                Foreground="White"
+                                Foreground="Black"
                                 >
                                 &#59166;
                             </TextBlock>
                             <TextBlock
                                 FontSize="18"
                                 Margin="20,0,0,0"
-                                Foreground="White"
+                                Foreground="Black"
                                 >
                                 Search Templates
                             </TextBlock>

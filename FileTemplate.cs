@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Data.Json;
+using System.IO;
 
 namespace File_Template_Centre
 {
@@ -86,12 +87,16 @@ namespace File_Template_Centre
                     );
             String line = this.localFileName + "," + dateCreated + "," + templateDescription + "\n";
             await FileIO.AppendLinesAsync(templateManifest, new List<String> { line });
-            //create file to save actual template file data and save
-            //StorageFile localFile =
-            //    await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(this.localFileName,
-            //    CreationCollisionOption.ReplaceExisting);
-            //await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(this.fileData));
-            await this.fileData.CopyAsync(ApplicationData.Current.LocalCacheFolder);
+            /* check to see if file exists with same file name 
+             * it will be overwrited */
+            //...
+            /* copy file to local save directory. If file has same name as previous 
+             then overwrite the previous file. */
+            await this.fileData.CopyAsync(
+                ApplicationData.Current.LocalCacheFolder, 
+                getLocalFileName(), 
+                NameCollisionOption.ReplaceExisting
+                );
         }
 
 
