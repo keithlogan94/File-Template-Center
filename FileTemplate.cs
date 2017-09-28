@@ -87,10 +87,11 @@ namespace File_Template_Centre
             String line = this.localFileName + "," + dateCreated + "," + templateDescription + "\n";
             await FileIO.AppendLinesAsync(templateManifest, new List<String> { line });
             //create file to save actual template file data and save
-            StorageFile localFile =
-                await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(this.localFileName,
-                CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(this.fileData));
+            //StorageFile localFile =
+            //    await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(this.localFileName,
+            //    CreationCollisionOption.ReplaceExisting);
+            //await FileIO.WriteTextAsync(localFile, await FileIO.ReadTextAsync(this.fileData));
+            await this.fileData.CopyAsync(ApplicationData.Current.LocalCacheFolder);
         }
 
 

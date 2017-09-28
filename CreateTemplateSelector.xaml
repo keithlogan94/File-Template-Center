@@ -162,6 +162,13 @@
             Opened="templateSettings_Opened"
             Closed="templateSettings_Closed"
             >
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PopupThemeTransition
+                        FromVerticalOffset="-500"
+                        />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
             <StackPanel
                 Width="400"
                 Background="#060d13"
@@ -188,9 +195,12 @@
                         Foreground="White"
                         />
                     <TextBox
-                        Width="300"
+                        Name="templateNameTextBox"
+                        Width="350"
                         Height="20"
                         Background="White"
+                        HorizontalAlignment="Left"
+                        Margin="30,0,0,0"
                         />
                 </StackPanel>
                 <StackPanel
@@ -204,18 +214,23 @@
                         Margin="20,0,0,0"
                         />
                     <TextBox
-                        Width="300"
+                        Name="descriptionTextBox"
+                        Width="350"
                         Background="White"
+                        HorizontalAlignment="Left"
+                        Margin="30,0,0,0"
                         />
                 </StackPanel>
                 <StackPanel
                     Orientation="Horizontal"
-                    Margin="40,0,0,0"
+                    Margin="35,0,0,0"
+                    Height="20"
                     >
                     <TextBlock
                         FontSize="12"
                         Foreground="White"
                         FontFamily="Segoe MDL2 Assets"
+                        VerticalAlignment="Center"
                         >
                         &#59171;
                     </TextBlock>
@@ -223,12 +238,13 @@
                         Name="localFileName"
                         FontSize="12"
                         Foreground="White"
+                        VerticalAlignment="Center"
                         >
                     </TextBlock>
                 </StackPanel>
                 <StackPanel
                     Orientation="Horizontal"
-                    Margin="100,0,0,0"
+                    Margin="110,0,0,0"
                     >
                     <Button
                         Name="saveTemplateButton"
@@ -240,6 +256,48 @@
                         Create Template
                     </Button>
                 </StackPanel>
+            </StackPanel>
+        </Popup>
+        <Popup
+            Name="messagePopup"
+            Height="30"
+            Width="400"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            >
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PopupThemeTransition
+                        FromHorizontalOffset="400"
+                        />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <StackPanel
+                Background="#060d13"
+                Orientation="Horizontal"
+                Height="30"
+                Width="400"
+                HorizontalAlignment="Left"
+                >
+                <Button
+                    Name="cancelMessage"
+                    FontFamily="Segoe MDL2 Assets"
+                    Click="cancelMessage_Click"
+                    FontSize="14"
+                    Foreground="White"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource CustomButtonStyle}"
+                    >
+                    &#59153;
+                </Button>
+                <TextBlock
+                    Name="message"
+                    FontSize="14"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    >
+                </TextBlock>
             </StackPanel>
         </Popup>
     </Grid>
